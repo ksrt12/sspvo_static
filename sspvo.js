@@ -1,6 +1,8 @@
 const express = require("express");
 const path = require("path");
 const { createProxyMiddleware } = require("http-proxy-middleware");
+const https = require("https");
+const fs = require("fs");
 const app = express();
 
 app.use(
@@ -19,11 +21,15 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
-const PORT = 80;
+const httpsOptions = {
+    cert: fs.readFileSync(__dirname + "/../ssl/server.crt"),
+    key: fs.readFileSync(__dirname + "/../ssl/server.key")
+};
 
 async function start() {
     try {
-        app.listen(PORT, () => console.log(`App has been started on port ${PORT}...`));
+        https.createServer(httpsOptions, app).listen(443,
+            () => console.log("Started with ssl"));
     } catch (e) {
         console.log('Server Error', e.message);
         process.exit(1);
