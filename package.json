@@ -4,7 +4,8 @@
     "description": "",
     "main": "sspvo.js",
     "scripts": {
-        "start": "cross-env NODE_ENV=production node sspvo.js",
+        "start": "node sspvo.js",
+        "server": "cross-env NODE_ENV=production node sspvo.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
